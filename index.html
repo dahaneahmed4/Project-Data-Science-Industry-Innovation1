@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Applications of Data Science | Real-World Examples</title>
+    <title>Applications of Data Science | Field Guide Pro</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,100 +13,102 @@
 
     <style>
         /* ========================================
-        1. THEME VARIABLES (MATERIAL YOU - DEEP BLUE)
+        1. THEME VARIABLES & CONFIGURATION
         ========================================
         */
         :root {
-            /* Backgrounds */
-            --bg-app: #05060a;        /* Pitch Black/Blue */
+            /* --- Color Palette: Deep Space Blue & Neon --- */
+            --bg-body: #05060a;        /* Pitch Black/Blue */
             --bg-sidebar: #0b0f19;    /* Deep Blue Sidebar */
             --bg-card: #111625;       /* Card Surface */
             --bg-card-hover: #161b2e; /* Card Hover */
             --bg-code: #000000;       /* Code Block Background */
             
-            /* Accents */
+            /* --- Brand Accents --- */
             --primary-blue: #A8C7FA;  /* Google Blue */
             --primary-dark: #0d47a1;
             --accent-cyan: #64ffda;   /* Neon Cyan */
             --accent-violet: #d2a8ff; /* Soft Violet */
-            --accent-pink: #ff79c6;
-            --accent-green: #50fa7b;
+            --accent-pink: #ff79c6;   /* Hot Pink */
+            --accent-green: #50fa7b;  /* Matrix Green */
+            --accent-orange: #ffb86c; /* Warm Warning */
             
-            /* Text */
+            /* --- Typography Colors --- */
             --text-main: #e6edf3;
             --text-secondary: #8b949e;
             --text-dim: #484f58;
             
-            /* Shapes */
+            /* --- UI Shapes --- */
             --radius-xl: 32px;
             --radius-lg: 24px;
-            --radius-md: 12px;
+            --radius-md: 16px;
+            --radius-sm: 8px;
             
-            /* Layout */
-            --sidebar-width: 320px;
-            --nav-height: 80px;
+            /* --- Layout Dimensions --- */
+            --sidebar-width: 340px;
+            --nav-item-height: 48px;
         }
 
         /* ========================================
-        2. GLOBAL RESET & BASE STYLES
+        2. RESET & GLOBAL STYLES
         ========================================
         */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary-blue) var(--bg-app);
+            outline: none;
         }
 
         html {
             scroll-behavior: smooth;
+            font-size: 16px;
         }
 
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: var(--bg-app);
+            background-color: var(--bg-body);
             color: var(--text-main);
-            line-height: 1.8;
-            font-size: 16px;
-            overflow-x: hidden;
+            line-height: 1.85;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
-        /* Custom Scrollbar */
+        /* --- Custom Scrollbar --- */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
         }
         ::-webkit-scrollbar-track {
-            background: var(--bg-app);
+            background: var(--bg-body);
         }
         ::-webkit-scrollbar-thumb {
             background: #333;
-            border-radius: 4px;
+            border-radius: 5px;
+            border: 2px solid var(--bg-body);
         }
         ::-webkit-scrollbar-thumb:hover {
             background: var(--primary-blue);
         }
 
-        /* Typography */
-        h1, h2, h3, h4, h5, h6 {
+        /* --- Typography Hierarchy --- */
+        h1, h2, h3, h4, h5 {
             font-family: 'Outfit', sans-serif;
             color: var(--text-main);
             margin-bottom: 1rem;
+            line-height: 1.2;
         }
 
         h1 {
             font-size: 3.5rem;
             font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
         }
 
         h2 {
             font-size: 2.2rem;
             font-weight: 600;
             color: var(--primary-blue);
-            margin-top: 3rem;
-            padding-bottom: 1rem;
+            margin-top: 4rem;
+            padding-bottom: 1.5rem;
             border-bottom: 1px solid rgba(168, 199, 250, 0.1);
             display: flex;
             align-items: center;
@@ -117,46 +119,59 @@
             font-size: 1.6rem;
             font-weight: 500;
             color: var(--accent-violet);
-            margin-top: 2rem;
+            margin-top: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         h4 {
             font-size: 1.1rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             color: var(--accent-cyan);
-            margin-top: 1.5rem;
+            margin-top: 2rem;
         }
 
         p {
             margin-bottom: 1.5rem;
             color: var(--text-secondary);
             font-size: 1.05rem;
-            max-width: 85ch;
+            max-width: 80ch; /* Optimal reading width */
+        }
+
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin-bottom: 0.8rem;
         }
 
         strong {
             color: var(--text-main);
-            font-weight: 600;
+            font-weight: 700;
         }
 
         a {
             color: var(--primary-blue);
             text-decoration: none;
-            transition: 0.2s;
+            transition: all 0.2s ease;
+            position: relative;
         }
         
         a:hover {
-            text-decoration: underline;
             color: var(--accent-cyan);
         }
 
         /* ========================================
-        3. LAYOUT GRID
+        3. LAYOUT STRUCTURE (Flexbox)
         ========================================
         */
-        .layout-wrapper {
+        .app-container {
             display: flex;
             min-height: 100vh;
         }
@@ -172,21 +187,23 @@
             position: fixed;
             top: 0;
             left: 0;
-            padding: 2rem;
+            padding: 2.5rem 2rem;
             display: flex;
             flex-direction: column;
             border-right: 1px solid rgba(255,255,255,0.05);
             z-index: 1000;
             overflow-y: auto;
+            backdrop-filter: blur(10px);
         }
 
+        /* Sidebar Brand */
         .brand-header {
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
         }
 
         .brand-logo {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 800;
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
             -webkit-background-clip: text;
@@ -194,33 +211,37 @@
             color: transparent;
             display: block;
             margin-bottom: 0.5rem;
+            letter-spacing: -1px;
         }
 
-        .brand-sub {
-            font-size: 0.8rem;
+        .brand-tagline {
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             color: var(--text-dim);
+            font-weight: 600;
         }
 
-        .nav-list {
+        /* Sidebar Menu */
+        .nav-menu {
             list-style: none;
             flex-grow: 1;
         }
 
-        .nav-section-title {
+        .nav-category {
             font-size: 0.75rem;
             text-transform: uppercase;
             color: var(--text-dim);
-            font-weight: 700;
-            margin-top: 1.5rem;
-            margin-bottom: 0.8rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
             padding-left: 1rem;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            border-left: 2px solid var(--text-dim);
         }
 
         .nav-item {
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
         }
 
         .nav-link {
@@ -231,29 +252,52 @@
             color: var(--text-secondary);
             font-weight: 500;
             font-size: 0.95rem;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             text-decoration: none;
+            border: 1px solid transparent;
         }
 
         .nav-link i {
-            margin-right: 12px;
+            margin-right: 15px;
             width: 20px;
             text-align: center;
             font-size: 1.1rem;
+            color: var(--text-dim);
+            transition: color 0.3s;
         }
 
+        /* Hover State */
         .nav-link:hover {
             background-color: rgba(255,255,255,0.03);
             color: var(--text-main);
             transform: translateX(5px);
-            text-decoration: none;
+            border-color: rgba(255,255,255,0.05);
+        }
+        
+        .nav-link:hover i {
+            color: var(--accent-cyan);
         }
 
+        /* Active State */
         .nav-link.active {
-            background: linear-gradient(90deg, rgba(168, 199, 250, 0.15) 0%, transparent 100%);
+            background: linear-gradient(90deg, rgba(168, 199, 250, 0.1) 0%, transparent 100%);
             color: var(--primary-blue);
             border-left: 3px solid var(--primary-blue);
             border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        }
+        
+        .nav-link.active i {
+            color: var(--primary-blue);
+        }
+
+        /* Sidebar Footer */
+        .sidebar-footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-align: center;
         }
 
         /* ========================================
@@ -263,55 +307,63 @@
         .main-content {
             margin-left: var(--sidebar-width);
             flex: 1;
-            padding: 4rem 5rem;
+            padding: 4rem 6rem;
             max-width: 1600px;
         }
 
         /* ========================================
-        6. HERO SECTION & VISUALIZATION
+        6. HERO SECTION
         ========================================
         */
         .hero-section {
-            background: linear-gradient(160deg, #111625 0%, #080a12 100%);
+            background: radial-gradient(circle at top right, #1a1f35 0%, #05060a 60%);
             border-radius: var(--radius-xl);
-            padding: 4rem;
-            margin-bottom: 4rem;
+            padding: 5rem;
+            margin-bottom: 5rem;
             border: 1px solid rgba(255,255,255,0.05);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
         }
 
-        /* Animated Background Elements */
-        .hero-bg-glow {
+        /* Abstract Glow */
+        .hero-glow {
             position: absolute;
-            top: -100px;
-            right: -100px;
-            width: 400px;
-            height: 400px;
+            top: -150px;
+            right: -150px;
+            width: 500px;
+            height: 500px;
             background: var(--primary-dark);
-            filter: blur(150px);
-            opacity: 0.2;
+            filter: blur(180px);
+            opacity: 0.25;
             border-radius: 50%;
-            z-index: 1;
+            z-index: 0;
+            animation: pulseGlow 10s infinite alternate;
         }
 
-        .hero-content {
+        @keyframes pulseGlow {
+            0% { transform: scale(1); opacity: 0.25; }
+            100% { transform: scale(1.1); opacity: 0.35; }
+        }
+
+        .hero-inner {
             position: relative;
-            z-index: 2;
+            z-index: 1;
         }
 
         .hero-badge {
             display: inline-block;
-            padding: 6px 14px;
+            padding: 8px 16px;
             background: rgba(100, 255, 218, 0.1);
             color: var(--accent-cyan);
             border: 1px solid rgba(100, 255, 218, 0.2);
             border-radius: 50px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
-            margin-bottom: 1.5rem;
+            letter-spacing: 1.5px;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.1);
         }
 
         .hero-title span {
@@ -321,520 +373,769 @@
             color: transparent;
         }
 
-        /* INTERACTIVE DATA VISUALIZATION (Simulated) */
-        .data-viz-container {
-            margin-top: 3rem;
-            background: rgba(0,0,0,0.3);
-            border-radius: var(--radius-md);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 20px;
+        /* Hero Statistics Grid */
+        .hero-stats {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 120px;
-            position: relative;
+            gap: 3rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .h-stat {
+            display: flex;
+            flex-direction: column;
         }
         
-        .viz-label {
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            font-size: 0.7rem;
-            color: var(--text-dim);
+        .h-stat-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        
+        .h-stat-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
             text-transform: uppercase;
-        }
-
-        .data-stream {
-            display: flex;
-            gap: 5px;
-            align-items: flex-end;
-            height: 60px;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .data-bar {
-            width: 8px;
-            background: var(--primary-blue);
-            border-radius: 4px;
-            animation: bounce 1.2s infinite ease-in-out;
-            opacity: 0.7;
-        }
-
-        @keyframes bounce {
-            0%, 100% { height: 10%; background: var(--primary-blue); }
-            50% { height: 80%; background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan); }
+            letter-spacing: 1px;
         }
 
         /* ========================================
-        7. CONTENT CARDS & COMPONENTS
+        7. COMPONENTS: CARDS, BOXES, CODE
         ========================================
         */
+        
+        /* Standard Card */
         .card {
             background-color: var(--bg-card);
             border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            margin-bottom: 2rem;
+            padding: 3rem;
+            margin-bottom: 2.5rem;
             border: 1px solid rgba(255,255,255,0.03);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             border-color: rgba(168, 199, 250, 0.1);
         }
 
-        /* Highlight Box */
+        /* Insight Box (Callout) */
         .insight-box {
-            background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, transparent 100%);
-            border-left: 4px solid var(--accent-violet);
-            padding: 1.5rem;
-            margin: 2rem 0;
+            background: linear-gradient(90deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+            border-left: 5px solid;
+            padding: 2rem;
+            margin: 2.5rem 0;
             border-radius: 0 var(--radius-md) var(--radius-md) 0;
-        }
-
-        .insight-box.cyan { border-color: var(--accent-cyan); }
-        .insight-box.green { border-color: var(--accent-green); }
-
-        .insight-title {
-            display: block;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        /* Code Blocks */
-        .code-wrapper {
             position: relative;
-            margin: 2rem 0;
         }
 
-        .code-lang-tag {
+        .insight-box::before {
+            content: '\f0eb'; /* Lightbulb Icon */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
             position: absolute;
-            top: 0;
-            right: 20px;
-            background: #2a2a2a;
-            color: #aaa;
-            font-size: 0.75rem;
-            padding: 4px 8px;
-            border-radius: 0 0 8px 8px;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 600;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 1.5rem;
+            opacity: 0.2;
+        }
+
+        .insight-box.cyan { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+        .insight-box.violet { border-color: var(--accent-violet); color: var(--accent-violet); }
+        .insight-box.green { border-color: var(--accent-green); color: var(--accent-green); }
+        
+        .insight-box h5 {
+            color: inherit;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .insight-box p {
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        /* Code Block Styling */
+        .code-container {
+            margin: 2.5rem 0;
+            border-radius: var(--radius-md);
+            background: var(--bg-code);
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        .code-header {
+            background: #1a1a1a;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .mac-dots {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .lang-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #888;
+            font-weight: 700;
         }
 
         pre {
-            background: var(--bg-code);
             padding: 1.5rem;
-            border-radius: var(--radius-md);
             overflow-x: auto;
-            border: 1px solid #333;
+            margin: 0;
         }
 
         code {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            color: #ccc;
+            font-size: 0.95rem;
+            color: #d4d4d4;
         }
 
-        .token-kw { color: var(--accent-pink); }
-        .token-func { color: var(--accent-green); }
-        .token-str { color: var(--accent-cyan); }
-        .token-comment { color: #6272a4; font-style: italic; }
-
-        /* Statistics Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-item {
-            background: rgba(255,255,255,0.02);
-            padding: 1.5rem;
-            border-radius: var(--radius-md);
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .stat-num {
-            display: block;
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary-blue);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-desc {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
+        /* Syntax Highlighting */
+        .kwd { color: var(--accent-pink); }   /* Keyword */
+        .str { color: var(--accent-cyan); }   /* String */
+        .fun { color: var(--accent-green); }  /* Function */
+        .num { color: var(--accent-orange); } /* Number */
+        .com { color: #6272a4; font-style: italic; } /* Comment */
 
         /* ========================================
-        8. FOOTER
+        8. VISUALIZATIONS (CSS/SVG)
         ========================================
         */
-        .site-footer {
-            margin-top: 5rem;
-            padding-top: 3rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            text-align: center;
-            color: var(--text-dim);
-            padding-bottom: 2rem;
+        
+        /* Bar Chart */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 200px;
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            margin: 2rem 0;
+            border-bottom: 2px solid var(--text-dim);
         }
 
-        .creator-badge {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 8px 20px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 50px;
-            font-size: 0.9rem;
+        .bar {
+            width: 12%;
+            background: linear-gradient(to top, var(--primary-blue), var(--accent-cyan));
+            border-radius: 4px 4px 0 0;
+            transition: height 1s ease;
+            position: relative;
+        }
+        
+        .bar:hover {
+            opacity: 0.8;
+            cursor: crosshair;
+        }
+        
+        .bar span {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
             color: var(--text-main);
-            border: 1px solid rgba(255,255,255,0.1);
+            font-weight: bold;
+        }
+
+        /* Line Graph (SVG) */
+        .graph-container {
+            width: 100%;
+            height: 250px;
+            margin: 2rem 0;
+            background: rgba(0,0,0,0.2);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            position: relative;
+        }
+        
+        svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+        
+        .line-path {
+            fill: none;
+            stroke: var(--accent-violet);
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 5px var(--accent-violet));
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 3s forwards ease-in-out;
+        }
+
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
         }
 
         /* ========================================
-        9. RESPONSIVE DESIGN
+        9. FUTURE CARDS (The 3 Slides)
+        ========================================
+        */
+        .future-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .future-slide {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .slide-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .future-slide.pink { border-top: 4px solid var(--accent-pink); }
+        .future-slide.pink .slide-icon { color: var(--accent-pink); }
+        
+        .future-slide.green { border-top: 4px solid var(--accent-green); }
+        .future-slide.green .slide-icon { color: var(--accent-green); }
+        
+        .future-slide.blue { border-top: 4px solid var(--primary-blue); }
+        .future-slide.blue .slide-icon { color: var(--primary-blue); }
+
+        .timeline-badge {
+            align-self: flex-start;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* ========================================
+        10. FOOTER
+        ========================================
+        */
+        footer {
+            margin-top: 8rem;
+            padding: 4rem 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            background: linear-gradient(to top, #000, transparent);
+        }
+
+        .creator-credit {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 12px 30px;
+            border: 1px solid var(--accent-cyan);
+            border-radius: 50px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .creator-credit:hover {
+            transform: scale(1.05);
+            background: rgba(100, 255, 218, 0.05);
+        }
+
+        /* ========================================
+        11. RESPONSIVE MEDIA QUERIES
         ========================================
         */
         @media (max-width: 1200px) {
-            .main-content { padding: 3rem; }
+            .main-content { padding: 4rem; }
+            .sidebar { width: 280px; }
+            h1 { font-size: 3rem; }
         }
 
         @media (max-width: 992px) {
-            .layout-wrapper { flex-direction: column; }
+            .app-container { flex-direction: column; }
             
             .sidebar {
                 width: 100%;
                 height: auto;
                 position: relative;
                 border-right: none;
-                border-bottom: 1px solid #333;
-                padding: 1.5rem;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                padding: 1.5rem 2rem;
             }
 
-            .nav-list {
+            .nav-menu {
                 display: flex;
                 overflow-x: auto;
-                gap: 10px;
+                gap: 15px;
                 padding-bottom: 10px;
+                margin-top: 1rem;
             }
-            
-            .nav-section-title { display: none; }
+
+            .nav-category { display: none; }
             
             .nav-link {
                 white-space: nowrap;
                 background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(255,255,255,0.1);
             }
+
+            .main-content { margin-left: 0; padding: 2rem; }
             
-            .main-content {
-                margin-left: 0;
-                padding: 2rem;
-            }
-            
+            .hero-section { padding: 3rem; }
+            .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
             h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="layout-wrapper">
+    <div class="app-container">
         
-        <nav class="sidebar">
+        <aside class="sidebar">
             <div class="brand-header">
-                <span class="brand-logo">DATA SCIENCE</span>
-                <span class="brand-sub">Industry Applications</span>
+                <span class="brand-logo">DS:FIELD<br>GUIDE_</span>
+                <span class="brand-tagline">Pro Edition v3.0</span>
             </div>
 
-            <ul class="nav-list">
-                <div class="nav-section-title">Overview</div>
-                <li class="nav-item">
-                    <a href="#intro" class="nav-link active"><i class="fas fa-home"></i> Introduction</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#impact" class="nav-link"><i class="fas fa-chart-line"></i> Global Impact</a>
-                </li>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-category">Overview</li>
+                    <li class="nav-item">
+                        <a href="#introduction" class="nav-link active">
+                            <i class="fas fa-play-circle"></i> Introduction
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#relevance" class="nav-link">
+                            <i class="fas fa-globe-americas"></i> Relevance
+                        </a>
+                    </li>
 
-                <div class="nav-section-title">Industries</div>
-                <li class="nav-item">
-                    <a href="#healthcare" class="nav-link"><i class="fas fa-heartbeat"></i> Healthcare</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#finance" class="nav-link"><i class="fas fa-coins"></i> Finance</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#logistics" class="nav-link"><i class="fas fa-truck-loading"></i> Logistics</a>
-                </li>
+                    <li class="nav-category">Core Modules</li>
+                    <li class="nav-item">
+                        <a href="#healthcare" class="nav-link">
+                            <i class="fas fa-dna"></i> Healthcare
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#finance" class="nav-link">
+                            <i class="fas fa-chart-line"></i> Finance
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#logistics" class="nav-link">
+                            <i class="fas fa-shipping-fast"></i> Logistics
+                        </a>
+                    </li>
 
-                <div class="nav-section-title">Future</div>
-                <li class="nav-item">
-                    <a href="#future" class="nav-link"><i class="fas fa-robot"></i> Next Horizon</a>
-                </li>
-            </ul>
-        </nav>
+                    <li class="nav-category">Advanced</li>
+                    <li class="nav-item">
+                        <a href="#future" class="nav-link">
+                            <i class="fas fa-rocket"></i> Future Horizon
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#conclusion" class="nav-link">
+                            <i class="fas fa-check-double"></i> Conclusion
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                &copy; 2026 Data Science Docs<br>
+                Open Source Education
+            </div>
+        </aside>
 
         <main class="main-content">
             
-            <section id="intro" class="hero-section">
-                <div class="hero-bg-glow"></div>
-                <div class="hero-content">
-                    <div class="hero-badge">Comprehensive Guide 2025</div>
-                    <h1 class="hero-title">Applications of Data Science:<br> <span>Real-world examples</span></h1>
-                    <p style="margin-top: 1.5rem; font-size: 1.2rem; color: #ccc;">
-                        A detailed technical exploration of how Machine Learning, Big Data, and AI are reshaping the infrastructure of the modern world.
+            <section id="introduction" class="hero-section">
+                <div class="hero-glow"></div>
+                <div class="hero-inner">
+                    <div class="hero-badge">Comprehensive Report</div>
+                    <h1 class="hero-title">Applications of Data Science:<br> <span>Driving Innovation</span></h1>
+                    <p style="margin-top: 1.5rem; font-size: 1.25rem; color: #d0d0d0;">
+                        An in-depth technical exploration of how Machine Learning, Big Data, and AI are rewriting the operating systems of Healthcare, Finance, and Logistics.
                     </p>
 
-                    <div class="data-viz-container">
-                        <span class="viz-label">Live Data Ingestion Rate (Simulated)</span>
-                        <div class="data-stream" id="dataStream">
-                            </div>
+                    <div class="hero-stats">
+                        <div class="h-stat">
+                            <span class="h-stat-num">$15.7T</span>
+                            <span class="h-stat-desc">AI Economic Impact</span>
+                        </div>
+                        <div class="h-stat">
+                            <span class="h-stat-num">328M</span>
+                            <span class="h-stat-desc">Terabytes/Day</span>
+                        </div>
+                        <div class="h-stat">
+                            <span class="h-stat-num">94%</span>
+                            <span class="h-stat-desc">Enterprise Growth</span>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section id="impact">
-                <h2><i class="fas fa-globe"></i> Global Economic Impact</h2>
-                <p>
-                    Data Science is not merely a department within a company; it has become the operating system of the global economy. By 2030, AI and Data Science are expected to contribute approximately <strong>$15.7 trillion</strong> to the global economy.
-                </p>
-
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <span class="stat-num">328M</span>
-                        <span class="stat-desc">Terabytes of Data Created Daily</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-num">94%</span>
-                        <span class="stat-desc">Enterprise Adoption Rate</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-num">37%</span>
-                        <span class="stat-desc">Reduction in OpEx</span>
-                    </div>
-                </div>
-
-                <div class="insight-box cyan">
-                    <span class="insight-title">The Data Lifecycle</span>
-                    <p style="margin-bottom: 0;">
-                        Modern applications follow a rigorous pipeline: <strong>Ingestion &rarr; Processing (ETL) &rarr; Modeling (ML) &rarr; Deployment (MLOps)</strong>. This cycle ensures that raw data is transformed into actionable intelligence in milliseconds.
+            <section id="relevance">
+                <div class="card">
+                    <h2><i class="fas fa-project-diagram"></i> Relevance & Outline</h2>
+                    <p>
+                        Data Science is no longer an optional "add-on" for businesses; it is the fundamental engine of modern innovation. From saving lives through early diagnosis to stabilizing global markets, the ability to process vast datasets determines success in the 21st century.
                     </p>
+                    
+                    <div class="insight-box violet">
+                        <h5>Objective</h5>
+                        <p>This documentation breaks down complex algorithms into actionable industry examples, demonstrating the shift from reactive systems to proactive intelligence.</p>
+                    </div>
+
+                    <h4>Report Outline:</h4>
+                    <ul>
+                        <li><strong>Healthcare:</strong> Moving from treatment to prevention using Genomics and CNNs.</li>
+                        <li><strong>Finance:</strong> Ensuring security and liquidity through HFT and Graph Analytics.</li>
+                        <li><strong>Logistics:</strong> Optimizing the physical world via Digital Twins and Robotics.</li>
+                        <li><strong>Future Horizon:</strong> Generative AI, Edge Computing, and Quantum ML.</li>
+                    </ul>
                 </div>
             </section>
 
             <section id="healthcare">
                 <h2><i class="fas fa-heartbeat"></i> 01. Healthcare</h2>
-                <p>
-                    The healthcare industry generates approximately 30% of the world's data volume. Data science is shifting the paradigm from <strong>reactive treatment</strong> to <strong>preventive care</strong> and <strong>precision medicine</strong>.
+                <p class="lead">
+                    The healthcare sector creates 30% of the world's data. Leveraging this data transitions medicine from a "one-size-fits-all" approach to "Precision Medicine."
                 </p>
 
                 <div class="card">
-                    <h3>1.1 Medical Imaging & Computer Vision</h3>
+                    <h3><i class="fas fa-user-md"></i> 1.1 Precision Medicine & Genomics</h3>
                     <p>
-                        Radiologists are often overworked, leading to diagnostic errors. Convolutional Neural Networks (CNNs), specifically architectures like <strong>U-Net</strong> and <strong>ResNet</strong>, are used to segment medical images (MRI, CT scans, X-Rays) with pixel-perfect accuracy.
+                        The cost of sequencing a human genome has fallen from $100 million to under $600. Data scientists use bioinformatics pipelines to identify genetic mutations responsible for rare diseases.
                     </p>
-                    
-                    <h4>Technical Detail: Tumor Detection</h4>
                     <p>
-                        Models are trained on datasets like the NIH Chest X-ray dataset (100,000+ images). The algorithm identifies pixel intensity gradients that indicate the edges of a malignant mass.
+                        <strong>CRISPR & AI:</strong> Machine Learning models predict "off-target" effects in gene editing, ensuring that therapies cure the disease without damaging healthy DNA.
                     </p>
-                    
-                    <div class="code-wrapper">
-                        <span class="code-lang-tag">Python (TensorFlow)</span>
-                        <pre><code><span class="token-kw">import</span> tensorflow <span class="token-kw">as</span> tf
-<span class="token-kw">from</span> tensorflow.keras.layers <span class="token-kw">import</span> Conv2D, MaxPooling2D
+                </div>
 
-<span class="token-comment"># Simple CNN Block for Feature Extraction</span>
-model = tf.keras.Sequential([
-    Conv2D(32, (3, 3), activation=<span class="token-str">'relu'</span>, input_shape=(256, 256, 1)),
-    MaxPooling2D(2, 2),
-    Conv2D(64, (3, 3), activation=<span class="token-str">'relu'</span>),
-    MaxPooling2D(2, 2),
-    <span class="token-comment"># Flatten and Dense layers follow...</span>
-])</code></pre>
+                <div class="card">
+                    <h3><i class="fas fa-x-ray"></i> 1.2 AI-Assisted Imaging (CNNs)</h3>
+                    <p>
+                        Convolutional Neural Networks (CNNs) act as a "second pair of eyes" for radiologists. Algorithms like <strong>U-Net</strong> are specifically designed for biomedical image segmentation, detecting tumors with pixel-perfect accuracy.
+                    </p>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <div class="mac-dots">
+                                <div class="dot red"></div>
+                                <div class="dot yellow"></div>
+                                <div class="dot green"></div>
+                            </div>
+                            <span class="lang-label">tumor_detect.py</span>
+                        </div>
+                        <pre><code><span class="kwd">import</span> tensorflow <span class="kwd">as</span> tf
+<span class="kwd">from</span> tensorflow.keras.layers <span class="kwd">import</span> Conv2D, MaxPooling2D
+
+<span class="com"># Define a CNN Block for X-Ray Analysis</span>
+<span class="kwd">def</span> <span class="fun">build_model</span>(input_shape):
+    model = tf.keras.Sequential([
+        <span class="com"># First Convolutional Layer</span>
+        Conv2D(<span class="num">32</span>, (<span class="num">3</span>,<span class="num">3</span>), activation=<span class="str">'relu'</span>, input_shape=input_shape),
+        MaxPooling2D(<span class="num">2</span>,<span class="num">2</span>),
+        
+        <span class="com"># Deep Feature Extraction</span>
+        Conv2D(<span class="num">64</span>, (<span class="num">3</span>,<span class="num">3</span>), activation=<span class="str">'relu'</span>),
+        MaxPooling2D(<span class="num">2</span>,<span class="num">2</span>),
+        
+        <span class="com"># Classifier Head</span>
+        Flatten(),
+        Dense(<span class="num">128</span>, activation=<span class="str">'relu'</span>),
+        Dense(<span class="num">1</span>, activation=<span class="str">'sigmoid'</span>) <span class="com"># Binary: Tumor / No Tumor</span>
+    ])
+    <span class="kwd">return</span> model</code></pre>
                     </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-chart-area"></i> 1.3 Predictive Analytics: Sepsis</h3>
+                    <p>
+                        Using Recurrent Neural Networks (RNNs/LSTMs) on time-series data (heart rate, blood pressure), hospitals can predict septic shock 12 hours before symptoms appear.
+                    </p>
                     
-                </div>
-
-                <div class="card">
-                    <h3>1.2 Drug Discovery (AlphaFold)</h3>
-                    <p>
-                        Developing a new drug traditionally costs $2.6 billion and takes 10+ years. DeepMind's <strong>AlphaFold</strong> database has predicted the 3D structure of nearly all known proteins. This allows pharmaceutical companies to simulate how a drug molecule will bind to a protein target <em>in silico</em> (on a computer) before physical testing.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <h3>1.3 Predictive Analytics & Sepsis</h3>
-                    <p>
-                        Sepsis is a silent killer in ICUs. Hospitals use Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks to analyze time-series data (heart rate, blood pressure, oxygen levels). These models can predict septic shock <strong>6 to 12 hours</strong> before clinical symptoms appear, allowing doctors to administer antibiotics early.
-                    </p>
+                    <h4>Patient Vitals: Risk Analysis</h4>
+                    <div class="graph-container">
+                        <svg viewBox="0 0 500 150" preserveAspectRatio="none">
+                            <line x1="0" y1="120" x2="500" y2="120" stroke="#333" stroke-width="1" />
+                            <line x1="0" y1="80" x2="500" y2="80" stroke="#333" stroke-width="1" />
+                            <line x1="0" y1="40" x2="500" y2="40" stroke="#333" stroke-width="1" />
+                            
+                            <path class="line-path" d="M0,100 Q50,90 100,110 T200,80 T300,60 T400,30 T500,20" />
+                            
+                            <circle cx="400" cy="30" r="5" fill="#ff5f56">
+                                <animate attributeName="opacity" values="0;1;0" dur="1s" repeatCount="indefinite" />
+                            </circle>
+                            <text x="380" y="15" fill="#ff5f56" font-size="12" font-family="sans-serif">ALERT</text>
+                        </svg>
+                        <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#888; margin-top:5px;">
+                            <span>08:00</span>
+                            <span>10:00</span>
+                            <span>12:00</span>
+                            <span>14:00 (Risk Detected)</span>
+                            <span>16:00</span>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <section id="finance">
                 <h2><i class="fas fa-coins"></i> 02. Finance</h2>
-                <p>
-                    Finance is a pure data industry. From High-Frequency Trading (HFT) to personalized banking, algorithms dictate the flow of capital.
+                <p class="lead">
+                    In finance, milliseconds equal millions. Algorithms now dictate the flow of capital, ensuring security, speed, and market stability.
                 </p>
 
                 <div class="card">
-                    <h3>2.1 Algorithmic Trading (HFT)</h3>
+                    <h3><i class="fas fa-bolt"></i> 2.1 High-Frequency Trading (HFT)</h3>
                     <p>
-                        Machines execute trades in microseconds. Strategies include <strong>Statistical Arbitrage</strong> and <strong>Market Making</strong>. These models ingest market data feeds and alternative data (satellite imagery, social media sentiment) to predict price movements.
+                        HFT firms use complex algorithms to analyze multiple markets and execute orders based on market conditions. Strategies include <strong>Statistical Arbitrage</strong> and <strong>Sentiment Analysis</strong> (reading news feeds via NLP).
                     </p>
-
+                    
                     <div class="insight-box green">
-                        <span class="insight-title">Visualization: The Order Book</span>
-                        <div style="display: flex; gap: 20px; align-items: center; margin-top: 10px;">
-                            <div style="font-family: monospace; font-size: 1.2rem; color: var(--accent-green);">AAPL: $154.23 <span style="font-size: 0.8rem;">▲ 0.4%</span></div>
-                            <div style="font-family: monospace; font-size: 1.2rem; color: var(--accent-pink);">TSLA: $242.50 <span style="font-size: 0.8rem;">▼ 1.2%</span></div>
-                            <div style="font-family: monospace; font-size: 1.2rem; color: var(--primary-blue);">BTC: $42,102 <span style="font-size: 0.8rem;">▲ 2.1%</span></div>
-                        </div>
+                        <h5>The Speed of Light</h5>
+                        <p>HFT servers are often "co-located" in the same physical building as the stock exchange to shave off microseconds of latency due to the speed of light in fiber optic cables.</p>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h3>2.2 Fraud Detection</h3>
+                    <h3><i class="fas fa-shield-alt"></i> 2.2 Fraud Detection & Graph Analytics</h3>
                     <p>
-                        Traditional rule-based systems (e.g., "Flag if > $10k") generate too many false positives. Modern systems use <strong>Unsupervised Learning</strong> (Isolation Forests, Autoencoders) to detect anomalies.
+                        Criminals work in networks. <strong>Graph Neural Networks (GNNs)</strong> map relationships between accounts. If Account A sends money to Account B, and B is linked to a known blacklisted node, the entire cluster is flagged.
                     </p>
-                    <ul>
-                        <li style="margin-bottom: 10px; color: var(--text-secondary);"><strong>Graph Analytics:</strong> Mapping relationships between accounts to spot money laundering rings.</li>
-                        <li style="margin-bottom: 10px; color: var(--text-secondary);"><strong>Behavioral Biometrics:</strong> Analyzing how a user types or holds their phone to prevent account takeover.</li>
-                    </ul>
+                    
+                    <h4>Fraud Detection Efficacy</h4>
+                    <div class="bar-chart">
+                        <div class="bar" style="height: 40%;"><span style="color:#888;">Rule Based</span></div>
+                        <div class="bar" style="height: 55%;"><span style="color:#888;">Logistic Reg</span></div>
+                        <div class="bar" style="height: 70%;"><span style="color:#888;">Random Forest</span></div>
+                        <div class="bar" style="height: 85%;"><span style="color:#888;">XGBoost</span></div>
+                        <div class="bar" style="height: 95%; background: linear-gradient(to top, var(--accent-violet), var(--accent-pink));"><span>Deep Graph</span></div>
+                    </div>
+                    <p style="text-align: center; font-size: 0.8rem; color: #888;">Accuracy Comparison of Models</p>
                 </div>
 
                 <div class="card">
-                    <h3>2.3 Credit Risk Modeling</h3>
+                    <h3><i class="fas fa-link"></i> 2.3 DeFi & Blockchain Analytics</h3>
                     <p>
-                        Fintech companies use <strong>XGBoost</strong> and <strong>Gradient Boosting</strong> classifiers to assess creditworthiness using thousands of features, including rent payments and utility bills, enabling financial inclusion for the "unbanked."
+                        In Decentralized Finance (DeFi), all transactions are public. Data Scientists perform "On-Chain Analysis" to track "Whale" movements (large holders) to predict market volatility before it happens.
                     </p>
                 </div>
             </section>
 
             <section id="logistics">
                 <h2><i class="fas fa-truck-loading"></i> 03. Logistics</h2>
-                <p>
-                    Logistics is about optimization. The "Amazon Effect" has pushed consumer expectations to same-day delivery, which is mathematically impossible without Data Science.
+                <p class="lead">
+                    The "Amazon Effect" has created consumer demand for same-day delivery. This is a mathematical impossibility without advanced optimization algorithms.
                 </p>
 
                 <div class="card">
-                    <h3>3.1 Route Optimization</h3>
+                    <h3><i class="fas fa-map-marked-alt"></i> 3.1 Route Optimization</h3>
                     <p>
-                        The "Traveling Salesperson Problem" is NP-hard. Logistics giants use heuristic algorithms and graph theory to optimize delivery routes dynamically.
-                    </p>
-                    <p>
-                        <strong>UPS ORION System:</strong> This famous algorithm optimizes 66,000 routes every minute. It notoriously minimizes left turns (in right-hand traffic countries) to save fuel and reduce accident risk, saving UPS 100 million miles annually.
+                        Solving the "Traveling Salesperson Problem" (TSP) is NP-Hard. Logistics giants use heuristic algorithms and <strong>Graph Theory</strong> to optimize routes dynamically, accounting for traffic, weather, and fuel consumption.
                     </p>
                     
-                    <div class="code-wrapper">
-                        <span class="code-lang-tag">Python (NetworkX)</span>
-                        <pre><code><span class="token-kw">import</span> networkx <span class="token-kw">as</span> nx
+                    <div class="code-container">
+                        <div class="code-header">
+                            <div class="mac-dots">
+                                <div class="dot red"></div>
+                                <div class="dot yellow"></div>
+                                <div class="dot green"></div>
+                            </div>
+                            <span class="lang-label">routing.py</span>
+                        </div>
+                        <pre><code><span class="kwd">import</span> networkx <span class="kwd">as</span> nx
 
-<span class="token-comment"># Create a graph of distribution centers</span>
+<span class="com"># Create Graph of Distribution Centers</span>
 G = nx.Graph()
-G.add_edge(<span class="token-str">"Warehouse_A"</span>, <span class="token-str">"Customer_1"</span>, weight=5.2)
-G.add_edge(<span class="token-str">"Warehouse_A"</span>, <span class="token-str">"Customer_2"</span>, weight=3.1)
+G.add_edge(<span class="str">"Warehouse_A"</span>, <span class="str">"Customer_1"</span>, weight=<span class="num">5.2</span>) <span class="com"># miles</span>
+G.add_edge(<span class="str">"Warehouse_A"</span>, <span class="str">"Customer_2"</span>, weight=<span class="num">3.1</span>)
 
-<span class="token-comment"># Find shortest path using Dijkstra's Algorithm</span>
-path = nx.dijkstra_path(G, source=<span class="token-str">"Warehouse_A"</span>, target=<span class="token-str">"Customer_1"</span>)</code></pre>
+<span class="com"># Calculate Shortest Path (Dijkstra)</span>
+path = nx.dijkstra_path(G, source=<span class="str">"Warehouse_A"</span>, target=<span class="str">"Customer_1"</span>)
+<span class="kwd">print</span>(f<span class="str">"Optimal Route: {path}"</span>)</code></pre>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h3>3.2 Demand Forecasting</h3>
+                    <h3><i class="fas fa-vr-cardboard"></i> 3.2 Supply Chain Digital Twins</h3>
                     <p>
-                        Retailers use Time Series Analysis (ARIMA, Prophet) to predict demand at the SKU level.
+                        Companies create virtual replicas (Digital Twins) of their entire supply chain. By running Monte Carlo simulations, they can predict the impact of disruptions (e.g., a blocked canal) weeks in advance and reroute shipments proactively.
                     </p>
-                    <div class="insight-box cyan">
-                        <span class="insight-title">Anticipatory Shipping</span>
-                        <p style="margin-bottom: 0;">
-                            Amazon's patented method predicts what you will buy before you click "Buy". It proactively moves inventory to a local fulfillment center near you, enabling 1-hour delivery windows.
-                        </p>
-                    </div>
                 </div>
 
                 <div class="card">
-                    <h3>3.3 Warehouse Automation</h3>
+                    <h3><i class="fas fa-robot"></i> 3.3 Warehouse Automation</h3>
                     <p>
-                        Kiva Systems (now Amazon Robotics) uses swarm intelligence. Hundreds of robots move shelves to human pickers. The central AI acts as an air traffic controller, calculating collision-free paths for hundreds of agents simultaneously.
+                        Swarm Intelligence algorithms control hundreds of robots in fulfillment centers. Unlike human workers, these robots calculate collision-free paths in real-time, optimizing storage density by moving shelves to the picker.
                     </p>
-                    
-
-[Image of autonomous warehouse robots]
-
                 </div>
             </section>
 
             <section id="future">
-                <h2><i class="fas fa-robot"></i> Next Horizon</h2>
-                <p>What comes next? The convergence of technologies.</p>
-                
-                <div class="stats-grid">
-                    <div class="stat-item" style="border-top: 4px solid var(--accent-cyan);">
-                        <span class="stat-num" style="font-size: 1.5rem; color: var(--text-main);">Digital Twins</span>
-                        <p class="stat-desc">Virtual replicas of jet engines or entire cities to simulate scenarios.</p>
+                <h2><i class="fas fa-rocket"></i> Future Horizon</h2>
+                <p class="lead">
+                    The convergence of technologies is creating a new era. Here are the three pillars defining the next decade.
+                </p>
+
+                <div class="future-grid">
+                    
+                    <article class="future-slide pink">
+                        <div>
+                            <div class="timeline-badge" style="color: var(--accent-pink);">2025 - 2027</div>
+                            <i class="fas fa-fingerprint slide-icon"></i>
+                            <h4>Generative AI & Synthetic Data</h4>
+                            <p>
+                                Real data is often scarce or private (GDPR/HIPAA). <strong>GANs (Generative Adversarial Networks)</strong> will generate "Synthetic Data"—fake data that statistically mirrors reality. This allows medical AI to be trained on millions of "fake" patients without risking anyone's privacy.
+                            </p>
+                        </div>
+                        <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-secondary);">
+                            <strong>Key Tech:</strong> VAEs, Diffusion Models.
+                        </div>
+                    </article>
+
+                    <article class="future-slide green">
+                        <div>
+                            <div class="timeline-badge" style="color: var(--accent-green);">2027 - 2030</div>
+                            <i class="fas fa-microchip slide-icon"></i>
+                            <h4>Edge AI & Federated Learning</h4>
+                            <p>
+                                Self-driving cars cannot afford the latency of the cloud. <strong>Edge AI</strong> moves the brain to the device. Combined with <strong>Federated Learning</strong>, devices learn from local data and only share the "knowledge" (model updates), ensuring total privacy.
+                            </p>
+                        </div>
+                        <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-secondary);">
+                            <strong>Key Tech:</strong> On-Device Inference, 5G/6G.
+                        </div>
+                    </article>
+
+                    <article class="future-slide blue">
+                        <div>
+                            <div class="timeline-badge" style="color: var(--primary-blue);">2030+</div>
+                            <i class="fas fa-atom slide-icon"></i>
+                            <h4>Quantum Machine Learning</h4>
+                            <p>
+                                Traditional computers use bits (0 or 1). Quantum computers use <strong>Qubits</strong> (Superposition). QML will solve optimization problems—like global logistics routing or molecular drug discovery—in seconds, tasks that would take today's supercomputers thousands of years.
+                            </p>
+                        </div>
+                        <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-secondary);">
+                            <strong>Key Tech:</strong> Qubits, Entanglement, Shor's Algorithm.
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            <section id="conclusion">
+                <div class="card" style="text-align: center; padding: 4rem;">
+                    <h2><i class="fas fa-flag-checkered"></i> Conclusion</h2>
+                    <p style="margin: 0 auto 2rem auto;">
+                        We are witnessing a fundamental shift from <strong>Reactive</strong> systems (fixing problems after they happen) to <strong>Proactive</strong> intelligence (preventing problems before they occur).
+                    </p>
+                    
+                    <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 3rem;">
+                        <span style="border: 1px solid var(--text-dim); padding: 10px 20px; border-radius: 50px;">Treating &rarr; Preserving</span>
+                        <span style="border: 1px solid var(--text-dim); padding: 10px 20px; border-radius: 50px;">Recovering &rarr; Preventing</span>
+                        <span style="border: 1px solid var(--text-dim); padding: 10px 20px; border-radius: 50px;">Guessing &rarr; Knowing</span>
                     </div>
-                    <div class="stat-item" style="border-top: 4px solid var(--accent-violet);">
-                        <span class="stat-num" style="font-size: 1.5rem; color: var(--text-main);">Quantum ML</span>
-                        <p class="stat-desc">Solving optimization problems in seconds that take supercomputers years.</p>
-                    </div>
-                    <div class="stat-item" style="border-top: 4px solid var(--accent-pink);">
-                        <span class="stat-num" style="font-size: 1.5rem; color: var(--text-main);">Edge AI</span>
-                        <p class="stat-desc">Running complex models locally on IoT devices without cloud latency.</p>
+
+                    <div class="insight-box cyan" style="text-align: left; max-width: 600px; margin: 0 auto;">
+                        <h5>Reflection</h5>
+                        <p>As algorithms become the decision-makers in healthcare and finance, how do we ensure <strong>Algorithmic Fairness</strong> and prevent bias in the black box?</p>
                     </div>
                 </div>
             </section>
 
-            <footer class="site-footer">
+            <footer>
                 <p>Applications of Data Science: Real-world examples of data science driving innovation.</p>
-                <div class="creator-badge">
-                    Created by DAHANE AHMED LAMINE
-                </div>
                 
+                <a href="#" class="creator-credit">
+                    Created by DAHANE AHMED LAMINE
+                </a>
+                
+                <p style="margin-top: 2rem; font-size: 0.8rem; color: var(--text-dim);">
+                    &copy; 2026 Open Source Documentation. All rights reserved.
+                </p>
             </footer>
 
         </main>
     </div>
 
     <script>
-        // 1. Generate Animated Data Bars for Hero Section
-        const streamContainer = document.getElementById('dataStream');
-        const colors = ['#A8C7FA', '#64ffda', '#d2a8ff', '#ff79c6'];
-        
-        for (let i = 0; i < 40; i++) {
-            let bar = document.createElement('div');
-            bar.classList.add('data-bar');
-            // Randomize height animation delay and color
-            bar.style.animationDelay = Math.random() + 's';
-            bar.style.background = colors[Math.floor(Math.random() * colors.length)];
-            streamContainer.appendChild(bar);
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. SCROLLSPY NAVIGATION
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
 
-        // 2. Sidebar Navigation Highlight on Scroll
-        const sections = document.querySelectorAll("section");
-        const navLinks = document.querySelectorAll(".nav-link");
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    // Offset for sticky header/visual comfort
+                    if (scrollY >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
 
-        window.onscroll = () => {
-            let current = "";
-            sections.forEach((section) => {
-                const sectionTop = section.offsetTop;
-                if (scrollY >= sectionTop - 150) {
-                    current = section.getAttribute("id");
-                }
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
             });
 
-            navLinks.forEach((link) => {
-                link.classList.remove("active");
-                if (link.getAttribute("href").includes(current)) {
-                    link.classList.add("active");
-                }
+            // 2. HERO STATISTICS COUNTER ANIMATION
+            const stats = document.querySelectorAll('.h-stat-num');
+            stats.forEach(stat => {
+                // Simple animation to fade in or slide up could be added here
+                // For now, we keep it static as CSS handles the layout
             });
-        };
+
+            // 3. BAR CHART ANIMATION (Simple Random Height Adjustment on Load)
+            const bars = document.querySelectorAll('.bar');
+            setTimeout(() => {
+                bars.forEach(bar => {
+                    // Slight randomization to make it look "live"
+                    let height = parseInt(bar.style.height);
+                    bar.style.height = (height + Math.floor(Math.random() * 5)) + '%';
+                });
+            }, 500);
+
+            console.log("System Ready. Created by DAHANE AHMED LAMINE.");
+        });
     </script>
 </body>
 </html>
